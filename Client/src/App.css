@@ -1,0 +1,108 @@
+html {
+  scroll-behavior: smooth;
+}
+.App {
+  text-align: center;
+}
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.bookss:hover > .fa-book {
+  color: rgb(3, 181, 235);
+}
+.checks {
+  padding: 10px;
+}
+.form-space {
+  padding-top: 3vh;
+}
+.check-label {
+  display: inline-block;
+  vertical-align: middle;
+}
+.center {
+  text-align: center;
+}
+.lefter {
+  text-align: left;
+}
+.tester {
+  background-color: grey;
+}
+.forms-c {
+  /* text-align: center; */
+  margin-left: 1vw;
+  display: flex;
+  justify-content: flex-start;
+}
+.widther {
+  width: 60vw;
+}
+.widther2 {
+  width: 20vw;
+}
+.padder {
+  padding: 2vh;
+  text-align: center;
+}
+.borderman {
+  border: 1px solid rgb(216, 70, 70);
+  border-radius: 9px;
+}
+.borderman2 {
+  border: 1px solid rgb(70, 194, 216);
+  border-radius: 9px;
+}
+.book-container {
+  border: 1px solid grey;
+  border-radius: 9px;
+  padding: 1vh;
+  /* width: 40vw; */
+}
+.book-outer {
+  padding: 1vh;
+}
+.book-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.column-container {
+  display: flex;
+}
+.right-column {
+  width: 100%;
+  display: flex;
+}
+.placers {
+  padding: 2vh;
+}
+.cb-border {
+  border: 1px solid rgb(70, 194, 216);
+  border-radius: 9px;
+  padding: 2vh;
+}
