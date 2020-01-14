@@ -3,13 +3,16 @@ import BookForm from "./bookForm";
 import CommentForm from "./commentForm";
 import { getBooks, getComments } from "../services/bookService";
 import CurrentCommentForm from "./currentCommentForm";
+import ThreadForm from "./threadForm";
 
 class Home extends Component {
   state = {
     books: [],
     comments: [],
     currentBook: "",
-    currentComments: ""
+    currentComments: "",
+    threads: [],
+    threadFormToggle: true
   };
 
   async componentDidMount() {
@@ -39,15 +42,27 @@ class Home extends Component {
     });
     await this.setState({ currentBook, currentComments });
   };
+  handleThreadToggle = async () => {
+    await this.setState({ threadFormToggle: !this.state.threadFormToggle });
+    console.log(this.state);
+  };
 
   render() {
     const { books, currentBook, currentComments } = this.state;
 
     return (
       <div>
-        <h1></h1>
-        <BookForm refresh={this.refreshBooks} />
-        <CommentForm refresh={this.refreshComments} />
+        {/* <BookForm refresh={this.refreshBooks} />
+        <CommentForm refresh={this.refreshComments} /> */}
+        <div className="toggle-thread">
+          <button
+            className="btn btn-secondary toggle-thread-button"
+            onClick={this.handleThreadToggle}
+          >
+            Toggle Thread Form
+          </button>
+        </div>
+        {this.state.threadFormToggle && <ThreadForm />}
         <div className="right-column book-outer mt-2">
           {currentBook && (
             <div className="cb-border">

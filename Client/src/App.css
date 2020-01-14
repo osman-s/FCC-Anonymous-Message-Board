@@ -1,5 +1,12 @@
 html {
   scroll-behavior: smooth;
+  /* background-color: black; */
+}
+.backc {
+  background-color: black;
+}
+.navbar {
+  margin-bottom: 0;
 }
 .bookss:hover > .fa-comment-alt {
   color: rgb(3, 181, 235);
@@ -25,15 +32,11 @@ html {
     transform: scale(1);
   }
 }
-.checks {
-  padding: 10px;
-}
-.form-space {
-  padding-top: 3vh;
-}
-.check-label {
-  display: inline-block;
-  vertical-align: middle;
+.toggle-thread {
+  display: flex;
+  justify-content: center;
+  background-color: black;
+  padding: 2vh;
 }
 .center {
   text-align: center;
@@ -45,16 +48,21 @@ html {
   background-color: grey;
 }
 .forms-c {
-  /* text-align: center; */
-  margin-left: 1vw;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
+  background-color: black;
+  color: #a7afb2;
 }
-.widther {
-  width: 60vw;
+.form-width {
+  width: 70vw;
 }
-.widther2 {
-  width: 20vw;
+.thread-form {
+  margin-top: -4vh;
+}
+.btn-secondary, .btn-secondary:hover, .btn-secondary:active, .btn-secondary:visited {
+  background-color: #be29ec !important;
+  border-color: black !important;
+  color: #D4D4D4;;
 }
 .padder {
   padding: 2vh;
@@ -81,18 +89,21 @@ html {
   font-size: 1.5rem;
   font-weight: 700;
 }
-.column-container {
-  display: flex;
-}
-.right-column {
-  width: 100%;
-  display: flex;
-}
 .placers {
   padding: 2vh;
 }
-.cb-border {
-  border: 1px solid rgb(70, 194, 216);
-  border-radius: 9px;
-  padding: 2vh;
+@media (max-width: 768px) {
+  .toolbar-navigation-itemsr {
+    display: none;
+    box-shadow:none;
+  }
+}
+
+@media (min-width: 769px) {
+  .toolbar-toggle-buttonr {
+    display: none;
+  }  
+  /* .toggle-thread-button {
+    margin-right: 57vw;
+  } */
 }

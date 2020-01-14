@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
+import TextArea from "./textarea";
 import Select from "./select";
 import Checkbox from "./checkbox";
 
@@ -49,9 +50,9 @@ class Form extends Component {
     this.setState({ data, errors });
   };
 
-  renderButton(label) {
+  renderButton(label, className="btn btn-primary") {
     return (
-      <button disabled={this.validate()} className="btn btn-primary">
+      <button disabled={this.validate()} className={className}>
         {label}
       </button>
     );
@@ -92,6 +93,22 @@ class Form extends Component {
 
     return (
       <Input
+        type={type}
+        ids={ids}
+        placeholder={placeholder}
+        name={name}
+        value={data[name]}
+        label={label}
+        onChange={this.handleChange}
+        error={errors[name]}
+      />
+    );
+  }
+  renderTextArea(name, label="", placeholder = "", ids=name, type = "text") {
+    const { data, errors } = this.state;
+
+    return (
+      <TextArea
         type={type}
         ids={ids}
         placeholder={placeholder}
