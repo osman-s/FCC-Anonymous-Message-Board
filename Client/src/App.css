@@ -1,39 +1,29 @@
 html {
   scroll-behavior: smooth;
 }
-.App {
-  text-align: center;
-}
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.bookss:hover > .fa-book {
+.bookss:hover > .fa-comment-alt {
   color: rgb(3, 181, 235);
+}
+.bouncer {
+  animation-duration: 1.5s;
+  animation-name: bounceIn;
+  /* animation: bounceIn 2s ease-in-out; */
+}
+.bouncer:active {
+  transform: translateY(2px);
+}
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 .checks {
   padding: 10px;
