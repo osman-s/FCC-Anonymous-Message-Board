@@ -6,7 +6,7 @@ const NavBar = ({ user }) => {
     <nav className="navbar navbar-dark bg-dark">
       <Link className="navbar-brand" to="/">
         <div className="bookss bouncer">
-        <i class="far fa-comment-alt "></i> Personal Library
+        <i class="far fa-comment-alt mr-2"></i> Anon. Message Board
         </div>
       </Link>
     </nav>

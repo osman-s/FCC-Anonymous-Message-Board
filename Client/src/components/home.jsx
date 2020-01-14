@@ -62,7 +62,7 @@ class Home extends Component {
             Toggle Thread Form
           </button>
         </div>
-        {this.state.threadFormToggle && <ThreadForm />}
+        {this.state.threadFormToggle && <ThreadForm toggle={this.handleThreadToggle}/>}
         <div className="right-column book-outer mt-2">
           {currentBook && (
             <div className="cb-border">

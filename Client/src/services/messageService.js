@@ -3,9 +3,13 @@ import { apiUrl } from "../config.json";
 
 const apiEndpoint = apiUrl;
 
-export function bookPost({ title }) {
+export function postThread({ username, password, subject, message, imageURL }) {
   return http.post(apiEndpoint, {
-    title: title
+    username: username,
+    password: password,
+    subject: subject,
+    message: message,
+    imageURL: imageURL,
   });
 }
 export function bookComment({ _id, comment }) {
