@@ -15,7 +15,17 @@ export function postThread({ username, password, subject, message, imageURL }) {
     password: password,
     subject: subject,
     message: message,
-    imageURL: imageURL,
+    imageURL: imageURL
+  });
+}
+export function upvoteThread(_id) {
+  return http.put(`${apiEndpoint}upvote`, {
+    _id: _id
+  });
+}
+export function downvoteThread(_id) {
+  return http.put(`${apiEndpoint}upvote`, {
+    _id: _id
   });
 }
 export function bookComment({ _id, comment }) {

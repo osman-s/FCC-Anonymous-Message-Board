@@ -1,24 +1,40 @@
 import React, { Component } from "react";
 import ThreadForm from "./threadForm";
-import { getThreads } from "../services/messageService";
+import {
+  getThreads,
+  upvoteThread,
+  downvoteThread
+} from "../services/messageService";
 import { Link } from "react-router-dom";
 
 class Home extends Component {
   state = {
     threads: [],
     threadFormToggle: true,
+    ogThreads: [],
     karmaState: true
   };
 
   async componentDidMount() {
     const { data: threads } = await getThreads();
-    this.setState({ threads });
+    this.setState({ threads, ogThreads: threads });
     console.log(threads);
   }
 
   refreshThreads = async () => {
     const { data: threads } = await getThreads();
     this.setState({ threads });
+  };
+  currentKarma = async id => {
+    const thread = await this.state.ogThreads.filter(
+      thread => thread._id === id
+    );
+    console.log("thread karma", thread);
+    return thread[0].karma;
+  };
+  threadKarma = async thread => {
+    console.log("thread karma points", thread);
+    return thread;
   };
   // refreshComments = async () => {
   //   const { data: comments } = await getComments();
@@ -40,8 +56,13 @@ class Home extends Component {
   handleThreadToggle = async () => {
     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
   };
-  toggleKarma = async () => {
-    await this.setState({ karmaState: !this.state.karmaState });
+  toggleKarma = async (threadKarma, ogKarma) => {
+    if (this.threadKarma(threadKarma) <= this.currentKarma(ogKarma)) {
+      await upvoteThread(threadKarma);
+    } else {
+      await downvoteThread(threadKarma);
+    }
+    this.refreshThreads();
   };
   addDefaultSrc(ev) {
     ev.target.src =
@@ -103,11 +124,17 @@ class Home extends Component {
                     </Link>
                     <div>
                       +{thread.karma}
-                      <div onClick={this.toggleKarma} className="toggle-karma">
-                        {this.state.karmaState ? (
-                          <i class="far fa-thumbs-up pl-2"></i>
+                      <div
+                        onClick={() =>
+                          this.toggleKarma(thread.karma, thread._id)
+                        }
+                        className="toggle-karma"
+                      >
+                        {this.threadKarma(thread.karma) <=
+                        this.currentKarma(thread._id) ? (
+                          <i className="far fa-thumbs-up pl-2"></i>
                         ) : (
-                          <i class="fas fa-thumbs-up pl-2"></i>
+                          <i className="fas fa-thumbs-up pl-2"></i>
                         )}
                       </div>
                     </div>
