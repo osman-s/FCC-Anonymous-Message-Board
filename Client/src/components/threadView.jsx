@@ -1,40 +1,50 @@
 import React, { Component } from "react";
+import BookForm from "./bookForm";
+import CommentForm from "./commentForm";
+import { getBooks, getComments } from "../services/bookService";
+import CurrentCommentForm from "./currentCommentForm";
 import ThreadForm from "./threadForm";
 import { getThreads } from "../services/messageService";
 import { Link } from "react-router-dom";
 
-class Home extends Component {
+class ThreadView extends Component {
   state = {
+    books: [],
+    comments: [],
+    currentBook: "",
+    currentComments: "",
     threads: [],
     threadFormToggle: true
   };
 
   async componentDidMount() {
     const { data: threads } = await getThreads();
-    this.setState({ threads });
+    const { data: books } = await getBooks();
+    const { data: comments } = await getComments();
+    this.setState({ books, comments, threads });
   }
 
   refreshThreads = async () => {
     const { data: threads } = await getThreads();
     this.setState({ threads });
   };
-  // refreshComments = async () => {
-  //   const { data: comments } = await getComments();
-  //   await this.setState({ comments });
-  // };
-  // refreshCurrentComments = async bookId => {
-  //   await this.refreshComments();
-  //   await this.handleBook(bookId);
-  // };
-  // handleBook = async bookId => {
-  //   var currentBook = this.state.books.filter(book => {
-  //     return book._id === bookId;
-  //   });
-  //   var currentComments = this.state.comments.filter(comment => {
-  //     return comment.book._id === bookId;
-  //   });
-  //   await this.setState({ currentBook, currentComments });
-  // };
+  refreshComments = async () => {
+    const { data: comments } = await getComments();
+    await this.setState({ comments });
+  };
+  refreshCurrentComments = async bookId => {
+    await this.refreshComments();
+    await this.handleBook(bookId);
+  };
+  handleBook = async bookId => {
+    var currentBook = this.state.books.filter(book => {
+      return book._id === bookId;
+    });
+    var currentComments = this.state.comments.filter(comment => {
+      return comment.book._id === bookId;
+    });
+    await this.setState({ currentBook, currentComments });
+  };
   handleThreadToggle = async () => {
     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
   };
@@ -87,7 +97,7 @@ class Home extends Component {
                   )}
                   <div className="thread-details pl-2">
                     <div className="thread-username">/{thread.username}</div>
-                    <Link to={`/threads/${thread._id}`} className="link-opt">
+                    <Link to={`/${thread._id}`} className="link-opt">
                     <div className="thread-subject">
                       {this.ellipsify(thread.subject, 30)}
                     </div>
@@ -107,4 +117,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default ThreadView;
