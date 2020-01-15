@@ -1,26 +1,25 @@
 import React, { Component } from "react";
-import { getBooks, getComments } from "../services/bookService";
 import ThreadForm from "./threadForm";
-import { getThreads } from "../services/messageService";
+import { getThread } from "../services/messageService";
 import { Link } from "react-router-dom";
 
 class ThreadView extends Component {
   state = {
-    threads: [],
-    threadFormToggle: true
+    thread: {},
   };
 
   async componentDidMount() {
-    const { data: threads } = await getThreads();
-    const { data: books } = await getBooks();
-    const { data: comments } = await getComments();
-    this.setState({ books, comments, threads });
+    const { id } = await this.props.match.params
+    const { data: thread } = await getThread(id);
+    this.setState({ thread });
+    console.log(id)
+    console.log(this.state)
   }
 
-  refreshThreads = async () => {
-    const { data: threads } = await getThreads();
-    this.setState({ threads });
-  };
+//   refreshThreads = async () => {
+//     const { data: threads } = await getThreads();
+//     this.setState({ threads });
+//   };
   // refreshComments = async () => {
   //   const { data: comments } = await getComments();
   //   await this.setState({ comments });
@@ -38,42 +37,20 @@ class ThreadView extends Component {
   //   });
   //   await this.setState({ currentBook, currentComments });
   // };
-  handleThreadToggle = async () => {
-    await this.setState({ threadFormToggle: !this.state.threadFormToggle });
-  };
+//   handleThreadToggle = async () => {
+//     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
+//   };
   addDefaultSrc(ev) {
     ev.target.src = "https://bitsofco.de/content/images/2018/12/broken-1.png";
   }
-  ellipsify = (str, x = 10) => {
-    if (str.length > x) {
-      return str.substring(0, x) + "...";
-    } else {
-      return str;
-    }
-  };
 
   render() {
-    const { books, currentBook, currentComments, threads } = this.state;
+    const { thread } = this.state;
 
     return (
       <div>
-        <div className="toggle-thread">
-          <button
-            className="btn btn-secondary toggle-thread-button"
-            onClick={this.handleThreadToggle}
-          >
-            Toggle Thread Form
-          </button>
-        </div>
-        {this.state.threadFormToggle && (
-          <ThreadForm
-            toggle={this.handleThreadToggle}
-            refresh={this.refreshThreads}
-          />
-        )}
         <div className="threads backc">
           <div className="">
-            {threads.map(thread => (
               <div className="thread-outer">
                 <div key={thread._id} className="thread-container">
                   {thread.imageURL && (
@@ -92,17 +69,16 @@ class ThreadView extends Component {
                     <div className="thread-username">/{thread.username}</div>
                     <Link to={`/${thread._id}`} className="link-opt">
                     <div className="thread-subject">
-                      {this.ellipsify(thread.subject, 30)}
+                      {thread.subject}
                     </div>
                     <div className="thread-message">
-                      {this.ellipsify(thread.message, 50)}
+                      {thread.message}
                     </div>
                     <div className="thread-date">{thread.datePosted}</div>
                     </Link>
                   </div>
                 </div>
               </div>
-            ))}
           </div>
         </div>
       </div>

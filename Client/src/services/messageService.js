@@ -6,6 +6,9 @@ const apiEndpoint = apiUrl;
 export function getThreads() {
   return http.get(apiEndpoint);
 }
+export function getThread(id) {
+  return http.get(`${apiEndpoint}thread/${id}`);
+}
 export function postThread({ username, password, subject, message, imageURL }) {
   return http.post(apiEndpoint, {
     username: username,

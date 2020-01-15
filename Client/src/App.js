@@ -6,6 +6,7 @@ import NotFound from "./components/notFound";
 import NavBar from "./components/navBar";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import ThreadView from "./components/threadView";
 
 class App extends Component {
   state = {};
@@ -19,6 +20,7 @@ class App extends Component {
         <NavBar user={user} />
         <main className="">
           <Switch>
+          <Route path="/thread/:id" component={ThreadView} />
             <Route
               path="/home"
               render={props => (

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { getBooks, getComments } from "../services/bookService";
 import ThreadForm from "./threadForm";
 import { getThreads } from "../services/messageService";
 import { Link } from "react-router-dom";
@@ -12,9 +11,7 @@ class Home extends Component {
 
   async componentDidMount() {
     const { data: threads } = await getThreads();
-    const { data: books } = await getBooks();
-    const { data: comments } = await getComments();
-    this.setState({ books, comments, threads });
+    this.setState({ threads });
   }
 
   refreshThreads = async () => {
@@ -90,7 +87,7 @@ class Home extends Component {
                   )}
                   <div className="thread-details pl-2">
                     <div className="thread-username">/{thread.username}</div>
-                    <Link to={`/${thread._id}`} className="link-opt">
+                    <Link to={`/thread/${thread._id}`} className="link-opt">
                     <div className="thread-subject">
                       {this.ellipsify(thread.subject, 30)}
                     </div>

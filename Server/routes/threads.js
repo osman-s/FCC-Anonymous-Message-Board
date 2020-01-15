@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Thread, validate } = require("../models/thread.model");
+const validateObjectId = require("../middleware/validateObjectId");
 const express = require("express");
 const router = express.Router();
 
@@ -42,13 +43,13 @@ router.delete("/", async (req, res) => {
   res.send(post);
 });
 
-// router.get("/:id", validateObjectId, async (req, res) => {
-//   const post = await Post.findById(req.params.id).select("-__v");
+router.get("/thread/:id", validateObjectId, async (req, res) => {
+  const post = await Thread.findById(req.params.id).select("-__v");
 
-//   if (!post)
-//     return res.status(404).send("The movie with the given ID was not found.");
+  if (!post)
+    return res.status(404).send("The thread with the given ID was not found.");
 
-//   res.send(movie);
-// });
+  res.send(post);
+});
 
 module.exports = router;
