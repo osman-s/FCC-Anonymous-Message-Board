@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ThreadForm from "./threadForm";
 import { getThread } from "../services/messageService";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 class ThreadView extends Component {
   state = {
@@ -13,8 +13,7 @@ class ThreadView extends Component {
       const { id } = await this.props.match.params;
       const { data: thread } = await getThread(id);
       await this.setState({ thread });
-      console.log(this.state);
-      //   window.location = "/";
+      console.log(this.props);
     } catch (ex) {
       if (ex.response && ex.response.status >= 400) {
         window.location = "/not-found";
@@ -47,7 +46,8 @@ class ThreadView extends Component {
   //     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
   //   };
   addDefaultSrc(ev) {
-    ev.target.src = "https://bitsofco.de/content/images/2018/12/broken-1.png";
+    ev.target.src =
+      "https://dubsism.files.wordpress.com/2017/12/image-not-found.png?w=768";
   }
 
   render() {
@@ -73,9 +73,10 @@ class ThreadView extends Component {
                   )}
                   <div className="thread-details pl-2">
                     <div className="thread-username">/{thread.username}</div>
-                      <div className="thread-subject">{thread.subject}</div>
-                      <div className="thread-message">{thread.message}</div>
-                      <div className="thread-date">{thread.datePosted}</div>
+                    <div className="thread-subject">{thread.subject}</div>
+                    <div className="thread-message">{thread.message}</div>
+                    <div>{thread.karma}</div>
+                    <div className="thread-date">{thread.datePosted}</div>
                   </div>
                 </div>
               </div>
@@ -83,9 +84,8 @@ class ThreadView extends Component {
           </div>
         </div>
       );
-    } else {
-      return null;
     }
+    else return null
   }
 }
 

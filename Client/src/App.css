@@ -139,6 +139,9 @@ html {
     font-size: .8rem;
   }
 }
+.toggle-karma {
+  display: inline;
+}
 
 @media (min-width: 769px) {
   .toolbar-toggle-buttonr {

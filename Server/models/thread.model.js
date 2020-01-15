@@ -24,6 +24,10 @@ const threadSchema = new mongoose.Schema({
     type: Date, 
     default: Date.now
   },
+  karma: {
+    type: Number,
+    default: 1
+  }
 });
 
 const Thread = mongoose.model("Thread", threadSchema);

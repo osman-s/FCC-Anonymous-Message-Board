@@ -10,7 +10,6 @@ import ThreadView from "./components/threadView";
 
 class App extends Component {
   state = {};
-
   render() {
     const { user } = this.state;
 

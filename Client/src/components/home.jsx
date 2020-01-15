@@ -6,12 +6,14 @@ import { Link } from "react-router-dom";
 class Home extends Component {
   state = {
     threads: [],
-    threadFormToggle: true
+    threadFormToggle: true,
+    karmaState: true
   };
 
   async componentDidMount() {
     const { data: threads } = await getThreads();
     this.setState({ threads });
+    console.log(threads);
   }
 
   refreshThreads = async () => {
@@ -38,8 +40,12 @@ class Home extends Component {
   handleThreadToggle = async () => {
     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
   };
+  toggleKarma = async () => {
+    await this.setState({ karmaState: !this.state.karmaState });
+  };
   addDefaultSrc(ev) {
-    ev.target.src = "https://dubsism.files.wordpress.com/2017/12/image-not-found.png?w=768";
+    ev.target.src =
+      "https://dubsism.files.wordpress.com/2017/12/image-not-found.png?w=768";
   }
   ellipsify = (str, x = 10) => {
     if (str.length > x) {
@@ -88,14 +94,24 @@ class Home extends Component {
                   <div className="thread-details pl-2">
                     <div className="thread-username">/{thread.username}</div>
                     <Link to={`/thread/${thread._id}`} className="link-opt">
-                    <div className="thread-subject">
-                      {this.ellipsify(thread.subject, 30)}
-                    </div>
-                    <div className="thread-message">
-                      {this.ellipsify(thread.message, 50)}
+                      <div className="thread-subject">
+                        {this.ellipsify(thread.subject, 30)}
+                      </div>
+                      <div className="thread-message">
+                        {this.ellipsify(thread.message, 50)}
+                      </div>
+                    </Link>
+                    <div>
+                      +{thread.karma}
+                      <div onClick={this.toggleKarma} className="toggle-karma">
+                        {this.state.karmaState ? (
+                          <i class="far fa-thumbs-up pl-2"></i>
+                        ) : (
+                          <i class="fas fa-thumbs-up pl-2"></i>
+                        )}
+                      </div>
                     </div>
                     <div className="thread-date">{thread.datePosted}</div>
-                    </Link>
                   </div>
                 </div>
               </div>
