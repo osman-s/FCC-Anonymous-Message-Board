@@ -127,8 +127,9 @@ class Home extends Component {
                   </div>
                 )}
                 <div className="thread-details">
-                  <div className="thread-username">{thread.username}</div>
+                  <div className="thread-username">/{thread.username}</div>
                   <div className="thread-subject">{thread.subject}</div>
+                  <div className="thread-message">{thread.message}</div>
                 </div>
               </div>
               </div>

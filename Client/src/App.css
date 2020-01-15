@@ -103,10 +103,22 @@ html {
   flex-direction: row;
   padding: 1vh;
   color: #D4D4D4;
-  border: .2rem solid rgb(216, 70, 70);
+  border-top: .101rem solid #DADEDF;
+  border-bottom: .101rem solid #DADEDF;
 }
 .thread-image {
   width: 30vw;
+}
+.thread-username {
+  font-size: 1rem;
+  color: #DADEDF;
+}
+.thread-subject {
+  font-size: 1.1rem;
+}
+.thread-message {
+  font-size: .8rem;
+  flex-wrap: wrap;
 }
 @media (max-width: 768px) {
   .toolbar-navigation-itemsr {
