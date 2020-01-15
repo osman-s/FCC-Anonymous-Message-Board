@@ -4,7 +4,7 @@ import ThreadForm from "./threadForm";
 import { getThreads } from "../services/messageService";
 import { Link } from "react-router-dom";
 
-class Home extends Component {
+class ThreadView extends Component {
   state = {
     threads: [],
     threadFormToggle: true
@@ -42,7 +42,7 @@ class Home extends Component {
     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
   };
   addDefaultSrc(ev) {
-    ev.target.src = "https://dubsism.files.wordpress.com/2017/12/image-not-found.png?w=768";
+    ev.target.src = "https://bitsofco.de/content/images/2018/12/broken-1.png";
   }
   ellipsify = (str, x = 10) => {
     if (str.length > x) {
@@ -110,4 +110,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default ThreadView;
