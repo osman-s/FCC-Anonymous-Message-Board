@@ -36,31 +36,14 @@ class Home extends Component {
     console.log("thread karma points", thread);
     return thread;
   };
-  // refreshComments = async () => {
-  //   const { data: comments } = await getComments();
-  //   await this.setState({ comments });
-  // };
-  // refreshCurrentComments = async bookId => {
-  //   await this.refreshComments();
-  //   await this.handleBook(bookId);
-  // };
-  // handleBook = async bookId => {
-  //   var currentBook = this.state.books.filter(book => {
-  //     return book._id === bookId;
-  //   });
-  //   var currentComments = this.state.comments.filter(comment => {
-  //     return comment.book._id === bookId;
-  //   });
-  //   await this.setState({ currentBook, currentComments });
-  // };
   handleThreadToggle = async () => {
     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
   };
-  toggleKarma = async (threadKarma, ogKarma) => {
-    if (this.threadKarma(threadKarma) <= this.currentKarma(ogKarma)) {
-      await upvoteThread(threadKarma);
+  toggleKarma = async (thread) => {
+    if (this.threadKarma(thread.karma) <= this.currentKarma(thread._id)) {
+      await upvoteThread(thread._id);
     } else {
-      await downvoteThread(threadKarma);
+      await downvoteThread(thread._id);
     }
     this.refreshThreads();
   };
@@ -126,7 +109,7 @@ class Home extends Component {
                       +{thread.karma}
                       <div
                         onClick={() =>
-                          this.toggleKarma(thread.karma, thread._id)
+                          this.toggleKarma(thread)
                         }
                         className="toggle-karma"
                       >

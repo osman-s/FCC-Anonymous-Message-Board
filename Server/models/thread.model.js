@@ -43,7 +43,15 @@ function validateThread(book) {
 
   return Joi.validate(book, schema);
 }
+function validateThreadUpdate(book) {
+  const schema = {
+    _id: Joi.objectId().required(),
+  };
+
+  return Joi.validate(book, schema);
+}
 
 exports.threadSchema = threadSchema;
 exports.Thread = Thread;
 exports.validate = validateThread;
+exports.validateThreadUpdate = validateThreadUpdate;
