@@ -20,6 +20,10 @@ const threadSchema = new mongoose.Schema({
   imageURL: {
     type: String,
   },
+  datePosted: { 
+    type: Date, 
+    default: Date.now
+  },
 });
 
 const Thread = mongoose.model("Thread", threadSchema);

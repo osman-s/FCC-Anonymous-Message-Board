@@ -3,6 +3,9 @@ import { apiUrl } from "../config.json";
 
 const apiEndpoint = apiUrl;
 
+export function getThreads() {
+  return http.get(apiEndpoint);
+}
 export function postThread({ username, password, subject, message, imageURL }) {
   return http.post(apiEndpoint, {
     username: username,
@@ -23,9 +26,6 @@ export function bookDelete(_id) {
   return http.delete(apiEndpoint, {
     data: { _id: _id }
   });
-}
-export function getBooks() {
-  return http.get(apiEndpoint);
 }
 export function getComments() {
   return http.get(apiEndpoint + "comments");

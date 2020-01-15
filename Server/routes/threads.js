@@ -35,10 +35,10 @@ router.post("/", async (req, res) => {
 router.delete("/", async (req, res) => {
   console.log(req.body);
   posts = req.body;
-  const post = await Book.findByIdAndRemove(posts._id);
+  const post = await Thread.findByIdAndRemove(posts._id);
 
   if (!post)
-    return res.status(404).send("The book with the given ID was not found.");
+    return res.status(404).send("The thread with the given ID was not found.");
   res.send(post);
 });
 

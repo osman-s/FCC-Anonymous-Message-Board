@@ -4,6 +4,7 @@ import CommentForm from "./commentForm";
 import { getBooks, getComments } from "../services/bookService";
 import CurrentCommentForm from "./currentCommentForm";
 import ThreadForm from "./threadForm";
+import { getThreads } from "../services/messageService";
 
 class Home extends Component {
   state = {
@@ -16,9 +17,10 @@ class Home extends Component {
   };
 
   async componentDidMount() {
+    const { data: threads } = await getThreads();
     const { data: books } = await getBooks();
     const { data: comments } = await getComments();
-    this.setState({ books, comments });
+    this.setState({ books, comments, threads });
   }
 
   refreshBooks = async () => {
@@ -44,11 +46,14 @@ class Home extends Component {
   };
   handleThreadToggle = async () => {
     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
-    console.log(this.state);
   };
+  addDefaultSrc(ev) {
+    ev.target.src =
+      "https://bitsofco.de/content/images/2018/12/broken-1.png";
+  }
 
   render() {
-    const { books, currentBook, currentComments } = this.state;
+    const { books, currentBook, currentComments, threads } = this.state;
 
     return (
       <div>
@@ -62,8 +67,10 @@ class Home extends Component {
             Toggle Thread Form
           </button>
         </div>
-        {this.state.threadFormToggle && <ThreadForm toggle={this.handleThreadToggle}/>}
-        <div className="right-column book-outer mt-2">
+        {this.state.threadFormToggle && (
+          <ThreadForm toggle={this.handleThreadToggle} />
+        )}
+        {/* <div className="right-column book-outer mt-2">
           {currentBook && (
             <div className="cb-border">
               <div className="book-title">{currentBook[0].title}</div>
@@ -99,6 +106,28 @@ class Home extends Component {
                     }{" "}
                     comments
                   </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div> */}
+        <div className="threads backc">
+          <div className="">
+            {threads.map(thread => (
+              <div key={thread._id} className="thread-container">
+                {thread.imageURL && (
+                  <div className="blackc">
+                    <img
+                      className="thread-image blackc"
+                      src={thread.imageURL}
+                      alt="thread-image"
+                      onError={this.addDefaultSrc}
+                    />
+                  </div>
+                )}
+                <div className="thread-details">
+                  <div className="">{thread.username}</div>
+                  <div>{thread.subject}</div>
                 </div>
               </div>
             ))}

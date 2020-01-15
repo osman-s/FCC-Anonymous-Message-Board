@@ -1,6 +1,6 @@
 html {
   scroll-behavior: smooth;
-  /* background-color: black; */
+  background-color: black;
 }
 .backc {
   background-color: black;
@@ -92,10 +92,20 @@ html {
 .placers {
   padding: 2vh;
 }
+.thread-container {
+  display: flex;
+  flex-direction: row;
+}
+.thread-container {
+  padding: 1vh;
+}
 @media (max-width: 768px) {
   .toolbar-navigation-itemsr {
     display: none;
     box-shadow:none;
+  }
+  .thread-image {
+    width: 60vw;
   }
 }
 
