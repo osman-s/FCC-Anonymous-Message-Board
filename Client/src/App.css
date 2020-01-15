@@ -62,7 +62,7 @@ html {
 .btn-secondary, .btn-secondary:hover, .btn-secondary:active, .btn-secondary:visited {
   background-color: #be29ec !important;
   border-color: black !important;
-  color: #D4D4D4;;
+  color: #D4D4D4;
 }
 .padder {
   padding: 2vh;
@@ -92,12 +92,21 @@ html {
 .placers {
   padding: 2vh;
 }
+.thread-outer {
+  padding: 1vh 0 1vh 0;
+}
+.threads {
+  padding-top: 1vh;
+}
 .thread-container {
   display: flex;
   flex-direction: row;
-}
-.thread-container {
   padding: 1vh;
+  color: #D4D4D4;
+  border: .2rem solid rgb(216, 70, 70);
+}
+.thread-image {
+  width: 30vw;
 }
 @media (max-width: 768px) {
   .toolbar-navigation-itemsr {
@@ -112,8 +121,8 @@ html {
 @media (min-width: 769px) {
   .toolbar-toggle-buttonr {
     display: none;
-  }  
-  /* .toggle-thread-button {
-    margin-right: 57vw;
-  } */
+  }
+  .thread-container {
+    padding-left: 3vh;
+  }
 }

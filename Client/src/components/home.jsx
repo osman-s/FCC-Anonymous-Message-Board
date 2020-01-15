@@ -114,7 +114,8 @@ class Home extends Component {
         <div className="threads backc">
           <div className="">
             {threads.map(thread => (
-              <div key={thread._id} className="thread-container">
+              <div className="thread-outer">
+                <div key={thread._id} className="thread-container">
                 {thread.imageURL && (
                   <div className="blackc">
                     <img
@@ -126,10 +127,12 @@ class Home extends Component {
                   </div>
                 )}
                 <div className="thread-details">
-                  <div className="">{thread.username}</div>
-                  <div>{thread.subject}</div>
+                  <div className="thread-username">{thread.username}</div>
+                  <div className="thread-subject">{thread.subject}</div>
                 </div>
               </div>
+              </div>
+              
             ))}
           </div>
         </div>
