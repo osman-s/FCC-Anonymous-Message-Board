@@ -5,6 +5,7 @@ import { getBooks, getComments } from "../services/bookService";
 import CurrentCommentForm from "./currentCommentForm";
 import ThreadForm from "./threadForm";
 import { getThreads } from "../services/messageService";
+import { Link } from "react-router-dom";
 
 class Home extends Component {
   state = {
@@ -23,9 +24,9 @@ class Home extends Component {
     this.setState({ books, comments, threads });
   }
 
-  refreshBooks = async () => {
-    const { data: books } = await getBooks();
-    this.setState({ books });
+  refreshThreads = async () => {
+    const { data: threads } = await getThreads();
+    this.setState({ threads });
   };
   refreshComments = async () => {
     const { data: comments } = await getComments();
@@ -48,9 +49,15 @@ class Home extends Component {
     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
   };
   addDefaultSrc(ev) {
-    ev.target.src =
-      "https://bitsofco.de/content/images/2018/12/broken-1.png";
+    ev.target.src = "https://bitsofco.de/content/images/2018/12/broken-1.png";
   }
+  ellipsify = (str, x = 10) => {
+    if (str.length > x) {
+      return str.substring(0, x) + "...";
+    } else {
+      return str;
+    }
+  };
 
   render() {
     const { books, currentBook, currentComments, threads } = this.state;
@@ -68,7 +75,10 @@ class Home extends Component {
           </button>
         </div>
         {this.state.threadFormToggle && (
-          <ThreadForm toggle={this.handleThreadToggle} />
+          <ThreadForm
+            toggle={this.handleThreadToggle}
+            refresh={this.refreshThreads}
+          />
         )}
         {/* <div className="right-column book-outer mt-2">
           {currentBook && (
@@ -116,24 +126,32 @@ class Home extends Component {
             {threads.map(thread => (
               <div className="thread-outer">
                 <div key={thread._id} className="thread-container">
-                {thread.imageURL && (
-                  <div className="blackc">
-                    <img
-                      className="thread-image blackc"
-                      src={thread.imageURL}
-                      alt="thread-image"
-                      onError={this.addDefaultSrc}
-                    />
+                  {thread.imageURL && (
+                    <div className="blackc">
+                      <a href={thread.imageURL}>
+                        <img
+                          className="thread-image blackc"
+                          src={thread.imageURL}
+                          alt="thread-image"
+                          onError={this.addDefaultSrc}
+                        />
+                      </a>
+                    </div>
+                  )}
+                  <div className="thread-details pl-2">
+                    <div className="thread-username">/{thread.username}</div>
+                    <Link to={`/${thread._id}`} className="link-opt">
+                    <div className="thread-subject">
+                      {this.ellipsify(thread.subject, 30)}
+                    </div>
+                    <div className="thread-message">
+                      {this.ellipsify(thread.message, 50)}
+                    </div>
+                    <div className="thread-date">{thread.datePosted}</div>
+                    </Link>
                   </div>
-                )}
-                <div className="thread-details">
-                  <div className="thread-username">/{thread.username}</div>
-                  <div className="thread-subject">{thread.subject}</div>
-                  <div className="thread-message">{thread.message}</div>
                 </div>
               </div>
-              </div>
-              
             ))}
           </div>
         </div>

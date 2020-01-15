@@ -18,7 +18,7 @@ class ThreadForm extends Form {
   schema = {
     username: Joi.string().alphanum().required().label("Username"),
     password: Joi.string().required().label("Password"),
-    subject: Joi.string().required().label("Subject"),
+    subject: Joi.string().required().max(50).label("Subject"),
     message: Joi.string().allow("").label("Message"),
     imageURL: Joi.string().allow("").uri().label("imageURL"),
   };
@@ -26,7 +26,7 @@ class ThreadForm extends Form {
   doSubmit = async () => {
     try {
       await postThread(this.state.data);
-    //   this.props.refresh();
+      this.props.refresh();
     this.props.toggle()
       //   window.location = "/";
     } catch (ex) {
