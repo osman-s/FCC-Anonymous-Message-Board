@@ -5,15 +5,18 @@ import { Link, useHistory } from "react-router-dom";
 
 class ThreadView extends Component {
   state = {
-    thread: {}
+    threads: []
   };
 
   async componentDidMount() {
     try {
       const { id } = await this.props.match.params;
       const { data: thread } = await getThread(id);
-      await this.setState({ thread });
-      console.log(this.props);
+      let threads = []
+      threads.push(thread)
+      await this.setState({ threads });
+      console.log("Intake", thread)
+      console.log("Update", this.state);
     } catch (ex) {
       if (ex.response && ex.response.status >= 400) {
         window.location = "/not-found";
@@ -51,11 +54,14 @@ class ThreadView extends Component {
   }
 
   render() {
-    const { thread } = this.state;
-    if (thread._id) {
+    const {threads} = this.state;
+    // console.log("state?", this.state.threads[0]._id)
+    // console.log("threads?", this.state.threads._id)
+    // if (threads[0]._id) {
+    if (threads) {
       return (
         <div>
-          <div className="threads backc">
+          {/* <div className="threads backc">
             <div className="">
               <div className="thread-outer">
                 <div key={thread._id} className="thread-container">
@@ -72,7 +78,7 @@ class ThreadView extends Component {
                     </div>
                   )}
                   <div className="thread-details pl-2">
-                    <div className="thread-username">/{thread.username}</div>
+                    <div className="thread-username text-secondary">/{thread.username}</div>
                     <div className="thread-subject">{thread.subject}</div>
                     <div className="thread-message">{thread.message}</div>
                     <div>{thread.karma}</div>
@@ -81,7 +87,7 @@ class ThreadView extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       );
     }

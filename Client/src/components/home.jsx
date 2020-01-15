@@ -26,17 +26,15 @@ class Home extends Component {
     this.setState({ threads });
   };
   currentKarma = id => {
-    const thread = this.state.ogThreads.filter(
-      thread => thread._id === id
-    );
+    const thread = this.state.ogThreads.filter(thread => thread._id === id);
     return thread[0].karma;
   };
   handleThreadToggle = async () => {
     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
   };
-  toggleKarma = async (thread) => {
-    console.log("typeof threadkarma", thread.karma)
-    console.log("typeof threadCurrentkarma", this.currentKarma(thread._id))
+  toggleKarma = async thread => {
+    console.log("typeof threadkarma", thread.karma);
+    console.log("typeof threadCurrentkarma", this.currentKarma(thread._id));
     if (thread.karma <= this.currentKarma(thread._id)) {
       await upvoteThread(thread._id);
     } else {
@@ -57,7 +55,7 @@ class Home extends Component {
   };
 
   render() {
-    const { books, currentBook, currentComments, threads } = this.state;
+    const { threads } = this.state;
 
     return (
       <div>
@@ -93,7 +91,9 @@ class Home extends Component {
                     </div>
                   )}
                   <div className="thread-details pl-2">
-                    <div className="thread-username">/{thread.username}</div>
+                    <div className="thread-username text-secondary">
+                      /{thread.username}
+                    </div>
                     <Link to={`/thread/${thread._id}`} className="link-opt">
                       <div className="thread-subject">
                         {this.ellipsify(thread.subject, 30)}
@@ -105,13 +105,10 @@ class Home extends Component {
                     <div>
                       +{thread.karma}
                       <div
-                        onClick={() =>
-                          this.toggleKarma(thread)
-                        }
+                        onClick={() => this.toggleKarma(thread)}
                         className="toggle-karma"
                       >
-                        {thread.karma ===
-                        this.currentKarma(thread._id) ? (
+                        {thread.karma === this.currentKarma(thread._id) ? (
                           <i className="far fa-thumbs-up pl-2"></i>
                         ) : (
                           <i className="fas fa-thumbs-up text-primary pl-2"></i>
