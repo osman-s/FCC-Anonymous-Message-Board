@@ -25,22 +25,19 @@ class Home extends Component {
     const { data: threads } = await getThreads();
     this.setState({ threads });
   };
-  currentKarma = async id => {
-    const thread = await this.state.ogThreads.filter(
+  currentKarma = id => {
+    const thread = this.state.ogThreads.filter(
       thread => thread._id === id
     );
-    console.log("thread karma", thread);
     return thread[0].karma;
-  };
-  threadKarma = async thread => {
-    console.log("thread karma points", thread);
-    return thread;
   };
   handleThreadToggle = async () => {
     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
   };
   toggleKarma = async (thread) => {
-    if (this.threadKarma(thread.karma) <= this.currentKarma(thread._id)) {
+    console.log("typeof threadkarma", thread.karma)
+    console.log("typeof threadCurrentkarma", this.currentKarma(thread._id))
+    if (thread.karma <= this.currentKarma(thread._id)) {
       await upvoteThread(thread._id);
     } else {
       await removeUpvoteThread(thread._id);
@@ -113,11 +110,11 @@ class Home extends Component {
                         }
                         className="toggle-karma"
                       >
-                        {this.threadKarma(thread.karma) <=
+                        {thread.karma ===
                         this.currentKarma(thread._id) ? (
                           <i className="far fa-thumbs-up pl-2"></i>
                         ) : (
-                          <i className="fas fa-thumbs-up pl-2"></i>
+                          <i className="fas fa-thumbs-up text-primary pl-2"></i>
                         )}
                       </div>
                     </div>
