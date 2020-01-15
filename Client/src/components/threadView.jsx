@@ -5,21 +5,27 @@ import { Link } from "react-router-dom";
 
 class ThreadView extends Component {
   state = {
-    thread: {},
+    thread: {}
   };
 
   async componentDidMount() {
-    const { id } = await this.props.match.params
-    const { data: thread } = await getThread(id);
-    this.setState({ thread });
-    console.log(id)
-    console.log(this.state)
+    try {
+      const { id } = await this.props.match.params;
+      const { data: thread } = await getThread(id);
+      await this.setState({ thread });
+      console.log(this.state);
+      //   window.location = "/";
+    } catch (ex) {
+      if (ex.response && ex.response.status >= 400) {
+        window.location = "/not-found";
+      }
+    }
   }
 
-//   refreshThreads = async () => {
-//     const { data: threads } = await getThreads();
-//     this.setState({ threads });
-//   };
+  //   refreshThreads = async () => {
+  //     const { data: threads } = await getThreads();
+  //     this.setState({ threads });
+  //   };
   // refreshComments = async () => {
   //   const { data: comments } = await getComments();
   //   await this.setState({ comments });
@@ -37,20 +43,20 @@ class ThreadView extends Component {
   //   });
   //   await this.setState({ currentBook, currentComments });
   // };
-//   handleThreadToggle = async () => {
-//     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
-//   };
+  //   handleThreadToggle = async () => {
+  //     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
+  //   };
   addDefaultSrc(ev) {
     ev.target.src = "https://bitsofco.de/content/images/2018/12/broken-1.png";
   }
 
   render() {
     const { thread } = this.state;
-
-    return (
-      <div>
-        <div className="threads backc">
-          <div className="">
+    if (thread._id) {
+      return (
+        <div>
+          <div className="threads backc">
+            <div className="">
               <div className="thread-outer">
                 <div key={thread._id} className="thread-container">
                   {thread.imageURL && (
@@ -59,7 +65,7 @@ class ThreadView extends Component {
                         <img
                           className="thread-image blackc"
                           src={thread.imageURL}
-                          alt="thread-image"
+                          alt=""
                           onError={this.addDefaultSrc}
                         />
                       </a>
@@ -67,22 +73,19 @@ class ThreadView extends Component {
                   )}
                   <div className="thread-details pl-2">
                     <div className="thread-username">/{thread.username}</div>
-                    <Link to={`/${thread._id}`} className="link-opt">
-                    <div className="thread-subject">
-                      {thread.subject}
-                    </div>
-                    <div className="thread-message">
-                      {thread.message}
-                    </div>
-                    <div className="thread-date">{thread.datePosted}</div>
-                    </Link>
+                      <div className="thread-subject">{thread.subject}</div>
+                      <div className="thread-message">{thread.message}</div>
+                      <div className="thread-date">{thread.datePosted}</div>
                   </div>
                 </div>
               </div>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return null;
+    }
   }
 }
 

@@ -71,15 +71,15 @@ class Home extends Component {
         <div className="threads backc">
           <div className="">
             {threads.map(thread => (
-              <div className="thread-outer">
-                <div key={thread._id} className="thread-container">
+              <div key={thread._id} className="thread-outer">
+                <div className="thread-container">
                   {thread.imageURL && (
                     <div className="blackc">
                       <a href={thread.imageURL}>
                         <img
                           className="thread-image blackc"
                           src={thread.imageURL}
-                          alt="thread-image"
+                          alt=""
                           onError={this.addDefaultSrc}
                         />
                       </a>

@@ -44,6 +44,7 @@ router.delete("/", async (req, res) => {
 });
 
 router.get("/thread/:id", validateObjectId, async (req, res) => {
+  console.log(req.params.id)
   const post = await Thread.findById(req.params.id).select("-__v");
 
   if (!post)
