@@ -1,6 +1,11 @@
 import React, { Component } from "react";
+import BookForm from "./bookForm";
+import CommentForm from "./commentForm";
+import { getBooks, getComments } from "../services/bookService";
+import CurrentCommentForm from "./currentCommentForm";
 import ThreadForm from "./threadForm";
 import { getThreads } from "../services/messageService";
+import { Link } from "react-router-dom";
 
 class Home extends Component {
   state = {
@@ -10,12 +15,14 @@ class Home extends Component {
 
   async componentDidMount() {
     const { data: threads } = await getThreads();
-    this.setState({ threads });
+    const { data: books } = await getBooks();
+    const { data: comments } = await getComments();
+    this.setState({ books, comments, threads });
   }
 
-  refreshBooks = async () => {
-    const { data: books } = await getBooks();
-    this.setState({ books });
+  refreshThreads = async () => {
+    const { data: threads } = await getThreads();
+    this.setState({ threads });
   };
   // refreshComments = async () => {
   //   const { data: comments } = await getComments();
@@ -38,12 +45,18 @@ class Home extends Component {
     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
   };
   addDefaultSrc(ev) {
-    ev.target.src =
-      "https://bitsofco.de/content/images/2018/12/broken-1.png";
+    ev.target.src = "https://bitsofco.de/content/images/2018/12/broken-1.png";
   }
+  ellipsify = (str, x = 10) => {
+    if (str.length > x) {
+      return str.substring(0, x) + "...";
+    } else {
+      return str;
+    }
+  };
 
   render() {
-    const { threads } = this.state;
+    const { books, currentBook, currentComments, threads } = this.state;
 
     return (
       <div>
@@ -56,14 +69,16 @@ class Home extends Component {
           </button>
         </div>
         {this.state.threadFormToggle && (
-          <ThreadForm toggle={this.handleThreadToggle} />
+          <ThreadForm
+            toggle={this.handleThreadToggle}
+            refresh={this.refreshThreads}
+          />
         )}
         <div className="threads backc">
           <div className="">
             {threads.map(thread => (
               <div className="thread-outer">
                 <div key={thread._id} className="thread-container">
-<<<<<<< HEAD
                   {thread.imageURL && (
                     <div className="blackc">
                       <a href={thread.imageURL}>
@@ -78,7 +93,7 @@ class Home extends Component {
                   )}
                   <div className="thread-details pl-2">
                     <div className="thread-username">/{thread.username}</div>
-                    {/* <Link to={`/threads/${thread._id}`} className="link-opt">
+                    <Link to={`/${thread._id}`} className="link-opt">
                     <div className="thread-subject">
                       {this.ellipsify(thread.subject, 30)}
                     </div>
@@ -86,27 +101,10 @@ class Home extends Component {
                       {this.ellipsify(thread.message, 50)}
                     </div>
                     <div className="thread-date">{thread.datePosted}</div>
-                    </Link> */}
-=======
-                {thread.imageURL && (
-                  <div className="blackc">
-                    <img
-                      className="thread-image blackc"
-                      src={thread.imageURL}
-                      alt="thread-image"
-                      onError={this.addDefaultSrc}
-                    />
->>>>>>> parent of 9e8bb40... Added ellipsify to text and updated some UI elements
+                    </Link>
                   </div>
-                )}
-                <div className="thread-details">
-                  <div className="thread-username">/{thread.username}</div>
-                  <div className="thread-subject">{thread.subject}</div>
-                  <div className="thread-message">{thread.message}</div>
                 </div>
               </div>
-              </div>
-              
             ))}
           </div>
         </div>

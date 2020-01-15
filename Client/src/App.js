@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import ThreadView from "./components/threadView";
 import Home from "./components/home";
 import NotFound from "./components/notFound";
 import NavBar from "./components/navBar";
@@ -20,7 +19,6 @@ class App extends Component {
         <NavBar user={user} />
         <main className="">
           <Switch>
-            {/* <Route path="/threads/id:" component={ThreadView} /> */}
             <Route
               path="/home"
               render={props => (
