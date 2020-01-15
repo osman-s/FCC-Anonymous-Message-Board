@@ -10,20 +10,44 @@ import ThreadView from "./components/threadView";
 
 class App extends Component {
   state = {};
+
+  addDefaultSrc(ev) {
+    ev.target.src =
+      "https://dubsism.files.wordpress.com/2017/12/image-not-found.png?w=768";
+  }
+  ellipsify = (str, x = 10) => {
+    if (str.length > x) {
+      return str.substring(0, x) + "...";
+    } else {
+      return str;
+    }
+  };
   render() {
     const { user } = this.state;
-
     return (
       <React.Fragment>
         <ToastContainer />
         <NavBar user={user} />
         <main className="">
           <Switch>
-          <Route path="/thread/:id" component={ThreadView} />
+            <Route
+              path="/thread/:id"
+              render={props => (
+                <ThreadView
+                  {...props}
+                  addDefaultSrc={this.addDefaultSrc}
+                  ellipsify={this.ellipsify}
+                />
+              )}
+            />
             <Route
               path="/home"
               render={props => (
-                <Home {...props} user={this.state.user} />
+                <Home
+                  {...props}
+                  addDefaultSrc={this.addDefaultSrc}
+                  ellipsify={this.ellipsify}
+                />
               )}
             />
             <Route path="/not-found" component={NotFound} />

@@ -6,6 +6,7 @@ import {
   removeUpvoteThread
 } from "../services/messageService";
 import { Link } from "react-router-dom";
+import ThreadPost from "./threadPost";
 
 class Home extends Component {
   state = {
@@ -19,6 +20,7 @@ class Home extends Component {
     const { data: threads } = await getThreads();
     this.setState({ threads, ogThreads: threads });
     console.log(threads);
+    console.log("props",);
   }
 
   refreshThreads = async () => {
@@ -42,17 +44,6 @@ class Home extends Component {
     }
     await this.refreshThreads();
   };
-  addDefaultSrc(ev) {
-    ev.target.src =
-      "https://dubsism.files.wordpress.com/2017/12/image-not-found.png?w=768";
-  }
-  ellipsify = (str, x = 10) => {
-    if (str.length > x) {
-      return str.substring(0, x) + "...";
-    } else {
-      return str;
-    }
-  };
 
   render() {
     const { threads } = this.state;
@@ -73,7 +64,7 @@ class Home extends Component {
             refresh={this.refreshThreads}
           />
         )}
-        <div className="threads backc">
+        {/* <div className="threads backc">
           <div className="">
             {threads.map(thread => (
               <div key={thread._id} className="thread-outer">
@@ -121,7 +112,15 @@ class Home extends Component {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
+        <ThreadPost
+          threads={threads}
+          addDefaultSrc={this.props.addDefaultSrc}
+          ellipsify={this.props.ellipsify}
+          ellipse={[30,50]}
+          toggleKarma={this.toggleKarma}
+          currentKarma={this.currentKarma}
+        />
       </div>
     );
   }
