@@ -20,7 +20,7 @@ class App extends Component {
         <NavBar user={user} />
         <main className="">
           <Switch>
-            <Route path="/threads/id:" component={ThreadView} />
+            {/* <Route path="/threads/id:" component={ThreadView} /> */}
             <Route
               path="/home"
               render={props => (

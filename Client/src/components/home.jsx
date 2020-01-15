@@ -50,7 +50,7 @@ class Home extends Component {
   };
 
   render() {
-    const { books, currentBook, currentComments, threads } = this.state;
+    const { threads } = this.state;
 
     return (
       <div>
@@ -87,7 +87,7 @@ class Home extends Component {
                   )}
                   <div className="thread-details pl-2">
                     <div className="thread-username">/{thread.username}</div>
-                    <Link to={`/threads/${thread._id}`} className="link-opt">
+                    {/* <Link to={`/threads/${thread._id}`} className="link-opt">
                     <div className="thread-subject">
                       {this.ellipsify(thread.subject, 30)}
                     </div>
@@ -95,7 +95,7 @@ class Home extends Component {
                       {this.ellipsify(thread.message, 50)}
                     </div>
                     <div className="thread-date">{thread.datePosted}</div>
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               </div>
