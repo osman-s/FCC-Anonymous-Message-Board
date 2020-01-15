@@ -23,8 +23,8 @@ export function upvoteThread(_id) {
     _id: _id
   });
 }
-export function downvoteThread(_id) {
-  return http.put(`${apiEndpoint}upvote`, {
+export function removeUpvoteThread(_id) {
+  return http.put(`${apiEndpoint}removeupvote`, {
     _id: _id
   });
 }

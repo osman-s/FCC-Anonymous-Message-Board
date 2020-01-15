@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const thread = await Thread.find()
     .select("-__v")
-    .sort("subject");
+    .sort({datePosted: 'desc'});
   res.send(thread);
 });
 
@@ -54,7 +54,12 @@ router.put("/upvote", async (req, res) => {
     },
     { new: true, strict: true, omitUndefined: true }
   );
-router.put("/downvote", async (req, res) => {
+  if (!post)
+    return res.status(404).send("The issue with the given ID was not found.");
+
+  res.send(req.body);
+});
+router.put("/removeupvote", async (req, res) => {
   console.log(req.body)
   const posts = req.body;
   const { error } = validateThreadUpdate(req.body);
@@ -67,7 +72,6 @@ router.put("/downvote", async (req, res) => {
     },
     { new: true, strict: true, omitUndefined: true }
   );
-
   if (!post)
     return res.status(404).send("The issue with the given ID was not found.");
 

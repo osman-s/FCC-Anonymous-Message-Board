@@ -3,7 +3,7 @@ import ThreadForm from "./threadForm";
 import {
   getThreads,
   upvoteThread,
-  downvoteThread
+  removeUpvoteThread
 } from "../services/messageService";
 import { Link } from "react-router-dom";
 
@@ -43,9 +43,9 @@ class Home extends Component {
     if (this.threadKarma(thread.karma) <= this.currentKarma(thread._id)) {
       await upvoteThread(thread._id);
     } else {
-      await downvoteThread(thread._id);
+      await removeUpvoteThread(thread._id);
     }
-    this.refreshThreads();
+    await this.refreshThreads();
   };
   addDefaultSrc(ev) {
     ev.target.src =
