@@ -9,6 +9,7 @@ class ThreadView extends Component {
     threadFormToggle: true
   };
 
+<<<<<<< HEAD
   async componentDidMount() {
     const { data: threads } = await getThreads();
     this.setState({ threads });
@@ -37,6 +38,29 @@ class ThreadView extends Component {
   // };
   handleThreadToggle = async () => {
     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
+=======
+  schema = {
+    username: Joi.string().alphanum().required().label("Username"),
+    password: Joi.string().required().label("Password"),
+    subject: Joi.string().required().label("Subject"),
+    message: Joi.string().allow("").label("Message"),
+    imageURL: Joi.string().allow("").uri().label("imageURL"),
+  };
+
+  doSubmit = async () => {
+    try {
+      await postThread(this.state.data);
+    //   this.props.refresh();
+    this.props.toggle()
+      //   window.location = "/";
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.username = ex.response.data;
+        this.setState({ errors });
+      }
+    }
+>>>>>>> parent of 9e8bb40... Added ellipsify to text and updated some UI elements
   };
   addDefaultSrc(ev) {
     ev.target.src = "https://bitsofco.de/content/images/2018/12/broken-1.png";

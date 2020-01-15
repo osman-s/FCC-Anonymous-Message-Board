@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ThreadForm from "./threadForm";
 import { getThreads } from "../services/messageService";
-import { Link } from "react-router-dom";
 
 class Home extends Component {
   state = {
@@ -14,9 +13,9 @@ class Home extends Component {
     this.setState({ threads });
   }
 
-  refreshThreads = async () => {
-    const { data: threads } = await getThreads();
-    this.setState({ threads });
+  refreshBooks = async () => {
+    const { data: books } = await getBooks();
+    this.setState({ books });
   };
   // refreshComments = async () => {
   //   const { data: comments } = await getComments();
@@ -39,15 +38,9 @@ class Home extends Component {
     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
   };
   addDefaultSrc(ev) {
-    ev.target.src = "https://bitsofco.de/content/images/2018/12/broken-1.png";
+    ev.target.src =
+      "https://bitsofco.de/content/images/2018/12/broken-1.png";
   }
-  ellipsify = (str, x = 10) => {
-    if (str.length > x) {
-      return str.substring(0, x) + "...";
-    } else {
-      return str;
-    }
-  };
 
   render() {
     const { threads } = this.state;
@@ -63,16 +56,14 @@ class Home extends Component {
           </button>
         </div>
         {this.state.threadFormToggle && (
-          <ThreadForm
-            toggle={this.handleThreadToggle}
-            refresh={this.refreshThreads}
-          />
+          <ThreadForm toggle={this.handleThreadToggle} />
         )}
         <div className="threads backc">
           <div className="">
             {threads.map(thread => (
               <div className="thread-outer">
                 <div key={thread._id} className="thread-container">
+<<<<<<< HEAD
                   {thread.imageURL && (
                     <div className="blackc">
                       <a href={thread.imageURL}>
@@ -96,9 +87,26 @@ class Home extends Component {
                     </div>
                     <div className="thread-date">{thread.datePosted}</div>
                     </Link> */}
+=======
+                {thread.imageURL && (
+                  <div className="blackc">
+                    <img
+                      className="thread-image blackc"
+                      src={thread.imageURL}
+                      alt="thread-image"
+                      onError={this.addDefaultSrc}
+                    />
+>>>>>>> parent of 9e8bb40... Added ellipsify to text and updated some UI elements
                   </div>
+                )}
+                <div className="thread-details">
+                  <div className="thread-username">/{thread.username}</div>
+                  <div className="thread-subject">{thread.subject}</div>
+                  <div className="thread-message">{thread.message}</div>
                 </div>
               </div>
+              </div>
+              
             ))}
           </div>
         </div>

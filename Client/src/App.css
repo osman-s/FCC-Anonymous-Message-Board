@@ -109,12 +109,16 @@ html {
 .thread-image {
   width: 30vw;
 }
-.link-opt {
+.thread-username {
+  font-size: 1rem;
   color: #DADEDF;
 }
-.link-opt:hover {
-  color: #63ace5;
-  text-decoration: none;
+.thread-subject {
+  font-size: 1.1rem;
+}
+.thread-message {
+  font-size: .8rem;
+  flex-wrap: wrap;
 }
 @media (max-width: 768px) {
   .toolbar-navigation-itemsr {
@@ -124,20 +128,6 @@ html {
   .thread-image {
     width: 60vw;
   }
-  .thread-username {
-    font-size: 1rem;
-    color: #DADEDF;
-  }
-  .thread-subject {
-    font-size: 1.1rem;
-  }
-  .thread-message {
-    font-size: .8rem;
-    flex-wrap: wrap;
-  }
-  .thread-date {
-    font-size: .8rem;
-  }
 }
 
 @media (min-width: 769px) {
@@ -146,19 +136,5 @@ html {
   }
   .thread-container {
     padding-left: 3vh;
-  }
-  .thread-username {
-    font-size: 1rem;
-    color: #DADEDF;
-  }
-  .thread-subject {
-    font-size: 1.1rem;
-  }
-  .thread-message {
-    font-size: .8rem;
-    flex-wrap: wrap;
-  }
-  .thread-date {
-    font-size: .8rem;
   }
 }
