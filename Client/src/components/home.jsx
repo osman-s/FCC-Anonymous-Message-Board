@@ -11,16 +11,15 @@ import ThreadPost from "./threadPost";
 class Home extends Component {
   state = {
     threads: [],
-    threadFormToggle: true,
     ogThreads: [],
-    karmaState: true
+    threadFormToggle: true
   };
 
   async componentDidMount() {
     const { data: threads } = await getThreads();
     this.setState({ threads, ogThreads: threads });
     console.log(threads);
-    console.log("props",);
+    console.log("props");
   }
 
   refreshThreads = async () => {
@@ -31,9 +30,6 @@ class Home extends Component {
     const thread = this.state.ogThreads.filter(thread => thread._id === id);
     return thread[0].karma;
   };
-  handleThreadToggle = async () => {
-    await this.setState({ threadFormToggle: !this.state.threadFormToggle });
-  };
   toggleKarma = async thread => {
     console.log("typeof threadkarma", thread.karma);
     console.log("typeof threadCurrentkarma", this.currentKarma(thread._id));
@@ -43,6 +39,9 @@ class Home extends Component {
       await removeUpvoteThread(thread._id);
     }
     await this.refreshThreads();
+  };
+  handleThreadToggle = async () => {
+    this.setState({ threadFormToggle: !this.state.threadFormToggle });
   };
 
   render() {
@@ -117,7 +116,7 @@ class Home extends Component {
           threads={threads}
           addDefaultSrc={this.props.addDefaultSrc}
           ellipsify={this.props.ellipsify}
-          ellipse={[30,50]}
+          ellipse={[30, 50]}
           toggleKarma={this.toggleKarma}
           currentKarma={this.currentKarma}
         />

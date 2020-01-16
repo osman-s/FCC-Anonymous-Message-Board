@@ -1,21 +1,26 @@
 import React, { Component } from "react";
-import ThreadForm from "./threadForm";
 import { getThread } from "../services/messageService";
-import { Link, useHistory } from "react-router-dom";
+import {
+  getThreads,
+  upvoteThread,
+  removeUpvoteThread
+} from "../services/messageService";
+import ThreadPost from "./threadPost";
+import { Link } from "react-router-dom";
 
 class ThreadView extends Component {
   state = {
-    threads: []
+    threads: [],
+    ogThreads: []
   };
 
   async componentDidMount() {
     try {
-      const { id } = await this.props.match.params;
+      const { id } = this.props.match.params;
       const { data: thread } = await getThread(id);
-      let threads = []
-      threads.push(thread)
-      await this.setState({ threads });
-      console.log("Intake", thread)
+      let threads = [];
+      threads.push(thread);
+      this.setState({ threads, ogThreads: threads });;
       console.log("Update", this.state);
     } catch (ex) {
       if (ex.response && ex.response.status >= 400) {
@@ -23,11 +28,25 @@ class ThreadView extends Component {
       }
     }
   }
+  currentKarma = id => {
+    const threadish = this.state.ogThreads.filter(thread => thread._id === id);
+    return threadish[0].karma;
+  };
+  toggleKarma = async thread => {
+    if (thread.karma <= this.currentKarma(thread._id)) {
+      await upvoteThread(thread._id);
+    } else {
+      await removeUpvoteThread(thread._id);
+    }
+    await this.refreshThreads(thread._id);
+  };
+  refreshThreads = async (id) => {
+    const { data: thread } = await getThread(id);
+      let threads = [];
+      threads.push(thread);
+      this.setState({ threads });
+  };
 
-  //   refreshThreads = async () => {
-  //     const { data: threads } = await getThreads();
-  //     this.setState({ threads });
-  //   };
   // refreshComments = async () => {
   //   const { data: comments } = await getComments();
   //   await this.setState({ comments });
@@ -48,50 +67,23 @@ class ThreadView extends Component {
   //   handleThreadToggle = async () => {
   //     await this.setState({ threadFormToggle: !this.state.threadFormToggle });
   //   };
-  addDefaultSrc(ev) {
-    ev.target.src =
-      "https://dubsism.files.wordpress.com/2017/12/image-not-found.png?w=768";
-  }
 
   render() {
-    const {threads} = this.state;
-    // console.log("state?", this.state.threads[0]._id)
-    // console.log("threads?", this.state.threads._id)
-    // if (threads[0]._id) {
+    const { threads } = this.state;
     if (threads) {
       return (
         <div>
-          {/* <div className="threads backc">
-            <div className="">
-              <div className="thread-outer">
-                <div key={thread._id} className="thread-container">
-                  {thread.imageURL && (
-                    <div className="blackc">
-                      <a href={thread.imageURL}>
-                        <img
-                          className="thread-image blackc"
-                          src={thread.imageURL}
-                          alt=""
-                          onError={this.addDefaultSrc}
-                        />
-                      </a>
-                    </div>
-                  )}
-                  <div className="thread-details pl-2">
-                    <div className="thread-username text-secondary">/{thread.username}</div>
-                    <div className="thread-subject">{thread.subject}</div>
-                    <div className="thread-message">{thread.message}</div>
-                    <div>{thread.karma}</div>
-                    <div className="thread-date">{thread.datePosted}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
+          <ThreadPost
+            threads={threads}
+            addDefaultSrc={this.props.addDefaultSrc}
+            ellipsify={this.props.ellipsify}
+            ellipse={[Infinity, Infinity]}
+            toggleKarma={this.toggleKarma}
+            currentKarma={this.currentKarma}
+          />
         </div>
       );
-    }
-    else return null
+    } else return null;
   }
 }
 
