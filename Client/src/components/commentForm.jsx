@@ -1,25 +1,40 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-import { bookComment } from "../services/bookService";
+import { bookComment, bookDelete } from "../services/bookService";
 
 class CommentForm extends Form {
   state = {
-    data: { _id: "", comment: "" },
+    data: { comment: "" },
     errors: {}
   };
 
   schema = {
-    _id: Joi.string()
-      .required()
-      .label("BookId"),
     comment: Joi.string()
-      .label("Comment")
+      .label("comment")
   };
 
   doSubmit = async () => {
+    var currentComment = {
+      _id: this.props._id,
+      comment: this.state.data.comment
+    };
     try {
-      await bookComment(this.state.data);
+      await bookComment(currentComment);
+      this.props.refresh();
+      this.setState({ data: { comment: "" }})
+      //   window.location = "/";
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.username = ex.response.data;
+        this.setState({ errors });
+      }
+    }
+  };
+  handleDelete = async () => {
+    try {
+      await bookDelete(this.props._id);
       this.props.refresh();
     //   window.location = "/";
     } catch (ex) {
@@ -34,12 +49,10 @@ class CommentForm extends Form {
   render() {
     return (
       <div className="forms-c">
-        <div>
-          <h1>Post Comment:</h1>
-          <form onSubmit={this.handleSubmit} className="widther">
-            {this.renderInput("_id", "BookId to comment on:", "")}
-            {this.renderInput("comment", "comment:", "")}
-            {this.renderButton("Submit")}
+        <div className="mt-4">
+          <form onSubmit={this.handleSubmit} className="">
+            {this.renderTextArea("comment", "", "New comment")}
+            {this.renderButton("Comment")}
           </form>
         </div>
       </div>

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Book } = require("../models/book.model");
+const { Thread } = require("../models/thread.model");
 const { Comment, validateComment } = require("../models/comment.model");
 const express = require("express");
 const router = express.Router();
@@ -17,13 +17,19 @@ router.post("/", async (req, res) => {
   const { error } = validateComment(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  let book = await Book.findById(posts.bookId);
-  if (!book) return res.status(400).send("Invalid BookId.");
+  let thread = await Thread.findById(posts.threadId);
+  if (!thread) return res.status(400).send("Invalid Thread.");
 
   post = new Comment({
-    book: {
-      _id: book._id,
-      title: book.title
+    thread: {
+      _id: thread._id,
+      username: thread.username,
+      password: thread.password,
+      subject: thread.subject,
+      message: thread.message,
+      imageURL: thread.imageURL,
+      karma: thread.karma,
+      datePosted: thread.datePosted,
     },
     comment: posts.comment
   });

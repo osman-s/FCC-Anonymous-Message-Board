@@ -1,15 +1,27 @@
 const Joi = require("joi");
 const mongoose = require("mongoose");
-const { bookSchema } = require("./book.model");
+const { threadSchema } = require("./thread.model");
 
 const CommentSchema = new mongoose.Schema({
-  book: {
-    type: bookSchema,
+  thread: {
+    type: threadSchema,
+    required: true
+  },
+  username: {
+    type: String,
     required: true
   },
   comment: {
     type: String,
     required: true,
+  },
+  karma: {
+    type: Number,
+    default: 1
+  },
+  datePosted: { 
+    type: Date, 
+    default: Date.now
   }
 });
 
@@ -17,7 +29,8 @@ const Comment = mongoose.model("Comment", CommentSchema);
 
 function validateComment(comment) {
   const schema = {
-    bookId: Joi.objectId().required(),
+    threadId: Joi.objectId().required(),
+    username: Joi.string().alphanum().required(),
     comment: Joi.string().required()
   };
 

@@ -16,37 +16,62 @@ class Home extends Component {
   };
 
   async componentDidMount() {
-    const { data: threads } = await getThreads();
-    this.setState({ threads, ogThreads: threads });
-    console.log(threads);
-    console.log("props");
+    try {
+      const { data: threads } = await getThreads();
+      this.setState({ threads, ogThreads: threads });
+    } catch (ex) {
+      if (ex.response && ex.response.status >= 400) {
+        // window.location = "/not-found";
+        console.log("Error loading data from database");
+      }
+    }
   }
-
-  refreshThreads = async () => {
-    const { data: threads } = await getThreads();
-    this.setState({ threads });
+  refreshThreads = async thread => {
+    try {
+      if (thread) {
+        const { data: threads } = await getThreads();
+        const ogThreads = [...this.state.ogThreads];
+        ogThreads.push(thread);
+        this.setState({ threads, ogThreads });
+      }
+      else {
+        const { data: threads } = await getThreads();
+        console.log("refresh", threads);
+        this.setState({ threads: threads });
+        console.log("set state refresh", this.state);
+      }
+    } catch (ex) {
+      if (ex.response && ex.response.status >= 400) {
+        // logger
+      }
+    }
   };
   currentKarma = id => {
-    const thread = this.state.ogThreads.filter(thread => thread._id === id);
-    return thread[0].karma;
+    try {
+      const thread = this.state.ogThreads.filter(thread => thread._id === id);
+      return thread[0].karma;
+    } catch (ex) {
+      if (ex.response && ex.response.status >= 400) {
+        // logger
+      }
+    }
   };
   toggleKarma = async thread => {
-    console.log("typeof threadkarma", thread.karma);
-    console.log("typeof threadCurrentkarma", this.currentKarma(thread._id));
     if (thread.karma <= this.currentKarma(thread._id)) {
       await upvoteThread(thread._id);
     } else {
       await removeUpvoteThread(thread._id);
     }
-    await this.refreshThreads();
+    this.refreshThreads();
   };
   handleThreadToggle = async () => {
     this.setState({ threadFormToggle: !this.state.threadFormToggle });
+    console.log("toggled");
   };
 
   render() {
     const { threads } = this.state;
-
+    console.log("Current state", this.state);
     return (
       <div>
         <div className="toggle-thread">
@@ -63,55 +88,6 @@ class Home extends Component {
             refresh={this.refreshThreads}
           />
         )}
-        {/* <div className="threads backc">
-          <div className="">
-            {threads.map(thread => (
-              <div key={thread._id} className="thread-outer">
-                <div className="thread-container">
-                  {thread.imageURL && (
-                    <div className="blackc">
-                      <a href={thread.imageURL}>
-                        <img
-                          className="thread-image blackc"
-                          src={thread.imageURL}
-                          alt=""
-                          onError={this.addDefaultSrc}
-                        />
-                      </a>
-                    </div>
-                  )}
-                  <div className="thread-details pl-2">
-                    <div className="thread-username text-secondary">
-                      /{thread.username}
-                    </div>
-                    <Link to={`/thread/${thread._id}`} className="link-opt">
-                      <div className="thread-subject">
-                        {this.ellipsify(thread.subject, 30)}
-                      </div>
-                      <div className="thread-message">
-                        {this.ellipsify(thread.message, 50)}
-                      </div>
-                    </Link>
-                    <div>
-                      +{thread.karma}
-                      <div
-                        onClick={() => this.toggleKarma(thread)}
-                        className="toggle-karma"
-                      >
-                        {thread.karma === this.currentKarma(thread._id) ? (
-                          <i className="far fa-thumbs-up pl-2"></i>
-                        ) : (
-                          <i className="fas fa-thumbs-up text-primary pl-2"></i>
-                        )}
-                      </div>
-                    </div>
-                    <div className="thread-date">{thread.datePosted}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div> */}
         <ThreadPost
           threads={threads}
           addDefaultSrc={this.props.addDefaultSrc}

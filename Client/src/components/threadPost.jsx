@@ -22,7 +22,7 @@ const ThreadPost = ({ threads, ellipsify, ellipse, toggleKarma, currentKarma, ad
               )}
               <div className="thread-details pl-2">
                 <div className="thread-username text-secondary">
-                  /{thread.username}
+                  /{thread.username} - {thread._id}
                 </div>
                 <Link to={`/thread/${thread._id}`} className="link-opt">
                   <div className="thread-subject">

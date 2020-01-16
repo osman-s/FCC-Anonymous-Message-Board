@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import { getThread } from "../services/messageService";
 import {
-  getThreads,
+  getThread,
   upvoteThread,
   removeUpvoteThread
 } from "../services/messageService";
 import ThreadPost from "./threadPost";
+import CommentForm from "./commentForm";
 import { Link } from "react-router-dom";
 
 class ThreadView extends Component {
   state = {
-    threads: [],
+    threads: "",
     ogThreads: []
   };
 
@@ -20,7 +20,7 @@ class ThreadView extends Component {
       const { data: thread } = await getThread(id);
       let threads = [];
       threads.push(thread);
-      this.setState({ threads, ogThreads: threads });;
+      this.setState({ threads, ogThreads: threads });
       console.log("Update", this.state);
     } catch (ex) {
       if (ex.response && ex.response.status >= 400) {
@@ -40,11 +40,11 @@ class ThreadView extends Component {
     }
     await this.refreshThreads(thread._id);
   };
-  refreshThreads = async (id) => {
+  refreshThreads = async id => {
     const { data: thread } = await getThread(id);
-      let threads = [];
-      threads.push(thread);
-      this.setState({ threads });
+    let threads = [];
+    threads.push(thread);
+    this.setState({ threads });
   };
 
   // refreshComments = async () => {
@@ -71,6 +71,7 @@ class ThreadView extends Component {
   render() {
     const { threads } = this.state;
     if (threads) {
+      console.log("checking threads", threads[0]._id);
       return (
         <div>
           <ThreadPost
@@ -81,6 +82,7 @@ class ThreadView extends Component {
             toggleKarma={this.toggleKarma}
             currentKarma={this.currentKarma}
           />
+          <CommentForm _id={threads[0]._id} />
         </div>
       );
     } else return null;
