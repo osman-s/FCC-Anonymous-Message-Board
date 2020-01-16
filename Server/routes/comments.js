@@ -7,7 +7,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const comment = await Comment.find()
     .select("-__v")
-    // .sort("bookId");
+    .sort({datePosted: 'desc'});
   res.send(comment);
 });
 
@@ -31,6 +31,7 @@ router.post("/", async (req, res) => {
       karma: thread.karma,
       datePosted: thread.datePosted,
     },
+    username: posts.username,
     comment: posts.comment
   });
   await post.save();

@@ -116,6 +116,11 @@ html {
   color: #63ace5;
   text-decoration: none;
 }
+.comment-details {
+  display: flex;
+  flex-direction: row;
+  padding: 1vw;
+}
 @media (max-width: 768px) {
   .toolbar-navigation-itemsr {
     display: none;

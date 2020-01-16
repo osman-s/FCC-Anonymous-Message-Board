@@ -75,6 +75,7 @@ class ThreadView extends Component {
       return (
         <div>
           <ThreadPost
+          className="p-3"
             threads={threads}
             addDefaultSrc={this.props.addDefaultSrc}
             ellipsify={this.props.ellipsify}
