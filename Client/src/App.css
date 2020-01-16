@@ -1,4 +1,4 @@
-html {
+html body {
   scroll-behavior: smooth;
   background-color: black;
 }
@@ -116,10 +116,24 @@ html {
   color: #63ace5;
   text-decoration: none;
 }
+.comment-form {
+  display: flex;
+  padding-left: 5vw;
+  justify-content: left;
+  margin-top: -1vh;
+}
+.comment-width {
+  width: 75vw;
+}
 .comment-details {
   display: flex;
   flex-direction: row;
-  padding: 1vw;
+}
+.comment-button {
+  margin-left: 1rem;
+  height: 2.5rem;
+  width: 6rem;
+  text-align: center;
 }
 @media (max-width: 768px) {
   .toolbar-navigation-itemsr {
@@ -143,9 +157,12 @@ html {
   .thread-date {
     font-size: .8rem;
   }
-}
-.toggle-karma {
-  display: inline;
+  .toggle-karma {
+    display: inline;
+  }
+  .comment-width {
+    width: 100%;
+  }
 }
 
 @media (min-width: 769px) {

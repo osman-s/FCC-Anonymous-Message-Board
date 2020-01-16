@@ -10,8 +10,10 @@ class CommentForm extends Form {
   };
 
   schema = {
-    comment: Joi.string().label("comment"),
-    username: Joi.string().label("comment")
+    username: Joi.string()
+      .alphanum()
+      .label("username"),
+    comment: Joi.string().label("comment")
   };
 
   doSubmit = async () => {
@@ -49,15 +51,17 @@ class CommentForm extends Form {
 
   render() {
     return (
-      <div className="backc border">
-        <div className="mt-4 form-width">
-          <form onSubmit={this.handleSubmit} className="comment-form">
-            {this.renderTextArea("comment", "", "New comment")}
-            <div className="comment-details">
-              {this.renderInput("username", "", "username")}
-              {this.renderButton("add comment", "btn btn-primary ")}
-            </div>
-          </form>
+      <div className="backc comment-form">
+        <div className=" p-2">
+          <div className="mt-4 comment-width">
+            <form onSubmit={this.handleSubmit} className="">
+              {this.renderTextArea("comment", "", "New comment")}
+              <div className="comment-details">
+                {this.renderInput("username", "", "username")}
+                {this.renderButton("Comment", "btn btn-primary comment-button")}
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     );
