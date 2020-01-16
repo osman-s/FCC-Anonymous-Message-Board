@@ -12,15 +12,18 @@ class CommentForm extends Form {
   schema = {
     username: Joi.string()
       .alphanum()
-      .label("username"),
-    comment: Joi.string().label("comment")
+      .label("username")
+      .required(),
+    comment: Joi.string()
+      .label("comment")
+      .required()
   };
 
   doSubmit = async () => {
     try {
       var comment = {
         _id: this.props._id,
-        username: this.state.username,
+        username: this.state.data.username,
         comment: this.state.data.comment
       };
       await Comment(comment);
