@@ -1,7 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
-import { bookComment, bookDelete } from "../services/bookService";
+import { Comment } from "../services/messageService";
 
 class CommentForm extends Form {
   state = {
@@ -17,15 +17,15 @@ class CommentForm extends Form {
   };
 
   doSubmit = async () => {
-    var comment = {
-      _id: this.props._id,
-      username: this.state.username,
-      comment: this.state.data.comment
-    };
     try {
-      await bookComment(comment);
+      var comment = {
+        _id: this.props._id,
+        username: this.state.username,
+        comment: this.state.data.comment
+      };
+      await Comment(comment);
       this.props.refresh();
-      this.setState({ data: { comment: "" } });
+      this.setState({ data: { comment: "", username: "" } });
       //   window.location = "/";
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -35,21 +35,22 @@ class CommentForm extends Form {
       }
     }
   };
-  handleDelete = async () => {
-    try {
-      await bookDelete(this.props._id);
-      this.props.refresh();
-      //   window.location = "/";
-    } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        const errors = { ...this.state.errors };
-        errors.username = ex.response.data;
-        this.setState({ errors });
-      }
-    }
-  };
+  // handleDelete = async () => {
+  //   try {
+  //     await bookDelete(this.props._id);
+  //     this.props.refresh();
+  //     //   window.location = "/";
+  //   } catch (ex) {
+  //     if (ex.response && ex.response.status === 400) {
+  //       const errors = { ...this.state.errors };
+  //       errors.username = ex.response.data;
+  //       this.setState({ errors });
+  //     }
+  //   }
+  // };
 
   render() {
+    console.log("test", this.state.username, this.state.comment);
     return (
       <div className="backc comment-form">
         <div className=" p-2">

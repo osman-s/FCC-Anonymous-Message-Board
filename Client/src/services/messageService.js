@@ -28,9 +28,11 @@ export function removeUpvoteThread(_id) {
     _id: _id
   });
 }
-export function bookComment({ _id, comment }) {
+export function Comment({ _id, username, comment }) {
+  console.log("this be stuff", username, _id, comment)
   return http.post(apiEndpoint + "comments", {
-    bookId: _id,
+    threadId: _id,
+    username: username,
     comment: comment
   });
 }
