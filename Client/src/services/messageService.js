@@ -28,18 +28,17 @@ export function removeUpvoteThread(_id) {
     _id: _id
   });
 }
+export function deleteThread(_id) {
+  return http.delete(apiEndpoint, {
+    data: { _id: _id }
+  });
+}
 export function Comment({ _id, username, comment }) {
-  console.log("this be stuff", username, _id, comment)
+  console.log("this be stuff", username, _id, comment);
   return http.post(apiEndpoint + "comments", {
     threadId: _id,
     username: username,
     comment: comment
-  });
-}
-
-export function bookDelete(_id) {
-  return http.delete(apiEndpoint, {
-    data: { _id: _id }
   });
 }
 export function getComments() {

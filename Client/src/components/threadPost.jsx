@@ -1,8 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-const ThreadPost = ({ threads, ellipsify, ellipse, toggleKarma, currentKarma, addDefaultSrc }) => {
-    return (
+const ThreadPost = ({
+  threads,
+  ellipsify,
+  ellipse,
+  toggleKarma,
+  currentKarma,
+  addDefaultSrc,
+  handleDelete
+}) => {
+  return (
     <div className="threads backc">
       <div className="">
         {threads.map(thread => (
@@ -45,7 +53,17 @@ const ThreadPost = ({ threads, ellipsify, ellipse, toggleKarma, currentKarma, ad
                     )}
                   </div>
                 </div>
-                <div className="thread-date">{thread.datePosted}</div>
+                <div className="thread-info">
+                  <div className="thread-date">{thread.datePosted}</div>
+                  <div className="delete-btn-container">
+                    <button
+                      className="btn btn-dark btn-sm"
+                      onClick={() => handleDelete(thread._id)}
+                    >
+                      delete
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

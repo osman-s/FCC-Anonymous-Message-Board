@@ -59,10 +59,13 @@ html body {
 .thread-form {
   margin-top: -4vh;
 }
-.btn-secondary, .btn-secondary:hover, .btn-secondary:active, .btn-secondary:visited {
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:visited {
   background-color: #be29ec !important;
   border-color: black !important;
-  color: #D4D4D4;
+  color: #d4d4d4;
 }
 .padder {
   padding: 2vh;
@@ -101,16 +104,26 @@ html body {
 .thread-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   padding: 1vh;
-  color: #D4D4D4;
-  border-top: .101rem solid #DADEDF;
-  border-bottom: .101rem solid #DADEDF;
+  color: #d4d4d4;
+  border-top: 0.101rem solid #dadedf;
+  border-bottom: 0.101rem solid #dadedf;
 }
 .thread-image {
   width: 30vw;
 }
+.thread-info {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.delete-btn-container {
+  padding-left: 1rem;
+}
 .link-opt {
-  color: #DADEDF;
+  color: #dadedf;
 }
 .link-opt:hover {
   color: #63ace5;
@@ -136,26 +149,22 @@ html body {
   text-align: center;
 }
 @media (max-width: 768px) {
-  .toolbar-navigation-itemsr {
-    display: none;
-    box-shadow:none;
-  }
   .thread-image {
     width: 60vw;
   }
   .thread-username {
     font-size: 1rem;
-    color: #DADEDF;
+    color: #dadedf;
   }
   .thread-subject {
     font-size: 1.1rem;
   }
   .thread-message {
-    font-size: .8rem;
+    font-size: 0.8rem;
     flex-wrap: wrap;
   }
   .thread-date {
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
   .toggle-karma {
     display: inline;
@@ -174,16 +183,16 @@ html body {
   }
   .thread-username {
     font-size: 1rem;
-    color: #DADEDF;
+    color: #dadedf;
   }
   .thread-subject {
     font-size: 1.1rem;
   }
   .thread-message {
-    font-size: .8rem;
+    font-size: 0.8rem;
     flex-wrap: wrap;
   }
   .thread-date {
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 }

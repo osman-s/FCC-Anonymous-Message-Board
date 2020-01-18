@@ -3,7 +3,8 @@ import ThreadForm from "./threadForm";
 import {
   getThreads,
   upvoteThread,
-  removeUpvoteThread
+  removeUpvoteThread,
+  deleteThread
 } from "../services/messageService";
 import { Link } from "react-router-dom";
 import ThreadPost from "./threadPost";
@@ -33,8 +34,7 @@ class Home extends Component {
         const ogThreads = [...this.state.ogThreads];
         ogThreads.push(thread);
         this.setState({ threads, ogThreads });
-      }
-      else {
+      } else {
         const { data: threads } = await getThreads();
         console.log("refresh", threads);
         this.setState({ threads: threads });
@@ -69,6 +69,20 @@ class Home extends Component {
     console.log("toggled");
   };
 
+  handleDelete = async id => {
+    try {
+      await deleteThread(id);
+      this.refreshThreads();
+      //   window.location = "/";
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.username = ex.response.data;
+        this.setState({ errors });
+      }
+    }
+  };
+
   render() {
     const { threads } = this.state;
     console.log("Current state", this.state);
@@ -95,6 +109,7 @@ class Home extends Component {
           ellipse={[30, 50]}
           toggleKarma={this.toggleKarma}
           currentKarma={this.currentKarma}
+          handleDelete={this.handleDelete}
         />
       </div>
     );
