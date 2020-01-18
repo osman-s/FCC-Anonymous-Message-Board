@@ -40,12 +40,9 @@ const ThreadPost = ({
                     {ellipsify(thread.message, ellipse[1])}
                   </div>
                 </Link>
-                <div>
+                <div className="toggle-karma">
                   +{thread.karma}
-                  <div
-                    onClick={() => toggleKarma(thread)}
-                    className="toggle-karma"
-                  >
+                  <div onClick={() => toggleKarma(thread)}>
                     {thread.karma === currentKarma(thread._id) ? (
                       <i className="far fa-thumbs-up pl-2"></i>
                     ) : (

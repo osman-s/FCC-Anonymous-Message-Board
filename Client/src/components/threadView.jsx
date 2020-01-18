@@ -51,7 +51,7 @@ class ThreadView extends Component {
     this.setState({ threads });
   };
   refreshComments = async id => {
-      const { data: comments } = await getComments(id);;
+    const { data: comments } = await getComments(id);
     this.setState({ comments });
   };
 
@@ -91,15 +91,17 @@ class ThreadView extends Component {
             toggleKarma={this.toggleKarma}
             currentKarma={this.currentKarma}
           />
-          <CommentForm _id={threads[0]._id} refresh={this.refreshComments}/>
-          <div className="comments-container">
+          <CommentForm _id={threads[0]._id} refresh={this.refreshComments} />
+          <div className="thread-outer">
             {comments.map(comment => (
-              <div>
-                <div className="thread-username text-secondary">
-                  /{comment.username} - {comment._id}
+              <div key={comment._id}className="thread-outer">
+                <div className="comment-container">
+                  <div className="thread-username text-secondary">
+                    /{comment.username} - {comment._id}
+                  </div>
+                  <div>{comment.comment}</div>
+                  <div>{comment.datePosted}</div>
                 </div>
-                <div>{comment.comment}</div>
-                <div>{comment.datePosted}</div>
               </div>
             ))}
           </div>

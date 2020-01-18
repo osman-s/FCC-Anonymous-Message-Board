@@ -8,6 +8,8 @@ router.get("/", async (req, res) => {
   const comments = await Comment.find()
     .select("-__v")
     .sort({ datePosted: "desc" });
+    if (!comments)
+    return res.status(404).send("The comment with the given threadID was not found.");
   res.send(comments);
 });
 
@@ -58,14 +60,5 @@ router.delete("/", async (req, res) => {
     return res.status(404).send("The comment with the given ID was not found.");
   res.send(post);
 });
-
-// router.get("/:id", validateObjectId, async (req, res) => {
-//   const post = await Post.findById(req.params.id).select("-__v");
-
-//   if (!post)
-//     return res.status(404).send("The movie with the given ID was not found.");
-
-//   res.send(movie);
-// });
 
 module.exports = router;

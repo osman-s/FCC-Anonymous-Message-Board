@@ -104,7 +104,7 @@ html body {
 .thread-container {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   padding: 1vh;
   color: #d4d4d4;
   border-top: 0.101rem solid #dadedf;
@@ -148,6 +148,19 @@ html body {
   width: 6rem;
   text-align: center;
 }
+.comment-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 1vh;
+  color: #d4d4d4;
+  border-top: 0.101rem solid #dadedf;
+  border-bottom: 0.101rem solid #dadedf;
+}
+.toggle-karma {
+  display: flex;
+  flex-direction: row;
+}
 @media (max-width: 768px) {
   .thread-image {
     width: 60vw;
@@ -165,9 +178,6 @@ html body {
   }
   .thread-date {
     font-size: 0.8rem;
-  }
-  .toggle-karma {
-    display: inline;
   }
   .comment-width {
     width: 100%;
