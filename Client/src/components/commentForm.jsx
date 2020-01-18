@@ -27,7 +27,7 @@ class CommentForm extends Form {
         comment: this.state.data.comment
       };
       await Comment(comment);
-      this.props.refresh();
+      this.props.refresh(this.props._id);
       this.setState({ data: { comment: "", username: "" } });
       //   window.location = "/";
     } catch (ex) {

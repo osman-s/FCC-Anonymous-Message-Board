@@ -21,7 +21,7 @@ class ThreadView extends Component {
       const { id } = this.props.match.params;
       const { data: thread } = await getThread(id);
       const { data: comments } = await getComments(id);
-      console.log("this be comments", comments)
+      console.log("this be comments", comments);
       let threads = [];
       threads.push(thread);
       this.setState({ threads, ogThreads: threads, comments });
@@ -50,6 +50,10 @@ class ThreadView extends Component {
     threads.push(thread);
     this.setState({ threads });
   };
+  refreshComments = async id => {
+      const { data: comments } = await getComments(id);;
+    this.setState({ comments });
+  };
 
   // refreshComments = async () => {
   //   const { data: comments } = await getComments();
@@ -73,13 +77,13 @@ class ThreadView extends Component {
   //   };
 
   render() {
-    const { threads } = this.state;
+    const { threads, comments } = this.state;
     if (threads) {
       console.log("checking threads", threads[0]._id);
       return (
         <div>
           <ThreadPost
-          className="p-3"
+            className="p-3"
             threads={threads}
             addDefaultSrc={this.props.addDefaultSrc}
             ellipsify={this.props.ellipsify}
@@ -87,7 +91,18 @@ class ThreadView extends Component {
             toggleKarma={this.toggleKarma}
             currentKarma={this.currentKarma}
           />
-          <CommentForm _id={threads[0]._id} />
+          <CommentForm _id={threads[0]._id} refresh={this.refreshComments}/>
+          <div className="comments-container">
+            {comments.map(comment => (
+              <div>
+                <div className="thread-username text-secondary">
+                  /{comment.username} - {comment._id}
+                </div>
+                <div>{comment.comment}</div>
+                <div>{comment.datePosted}</div>
+              </div>
+            ))}
+          </div>
         </div>
       );
     } else return null;

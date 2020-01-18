@@ -14,11 +14,10 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   console.log(req.params.id);
   _id = mongoose.Types.ObjectId(req.params.id);
-  const comment = await Comment.find()
-  .where("thread")
-  .select("-__v");
-  // .sort({ datePosted: "desc" });
-  console.log(comment);
+  // _id = req.params.id;
+  const comment = await Comment.find({
+    "thread._id": _id
+  }).sort({ datePosted: "desc" });
   res.send(comment);
 });
 
