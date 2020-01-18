@@ -53,7 +53,6 @@ class CommentForm extends Form {
   // };
 
   render() {
-    console.log("test", this.state.username, this.state.comment);
     return (
       <div className="backc comment-form">
         <div className=" p-2">
