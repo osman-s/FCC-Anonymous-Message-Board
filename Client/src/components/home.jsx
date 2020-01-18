@@ -106,7 +106,7 @@ class Home extends Component {
           threads={threads}
           addDefaultSrc={this.props.addDefaultSrc}
           ellipsify={this.props.ellipsify}
-          ellipse={[30, 50]}
+          ellipse={[50, 30]}
           toggleKarma={this.toggleKarma}
           currentKarma={this.currentKarma}
           handleDelete={this.handleDelete}

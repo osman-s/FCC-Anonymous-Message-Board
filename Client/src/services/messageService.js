@@ -41,6 +41,6 @@ export function Comment({ _id, username, comment }) {
     comment: comment
   });
 }
-export function getComments() {
-  return http.get(apiEndpoint + "comments");
+export function getComments(threadId) {
+  return http.get(`${apiEndpoint}comments/${threadId}`);
 }

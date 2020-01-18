@@ -5,9 +5,20 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const comment = await Comment.find()
+  const comments = await Comment.find()
     .select("-__v")
-    .sort({datePosted: 'desc'});
+    .sort({ datePosted: "desc" });
+  res.send(comments);
+});
+
+router.get("/:id", async (req, res) => {
+  console.log(req.params.id);
+  _id = mongoose.Types.ObjectId(req.params.id);
+  const comment = await Comment.find()
+  .where("thread")
+  .select("-__v");
+  // .sort({ datePosted: "desc" });
+  console.log(comment);
   res.send(comment);
 });
 
@@ -29,7 +40,7 @@ router.post("/", async (req, res) => {
       message: thread.message,
       imageURL: thread.imageURL,
       karma: thread.karma,
-      datePosted: thread.datePosted,
+      datePosted: thread.datePosted
     },
     username: posts.username,
     comment: posts.comment

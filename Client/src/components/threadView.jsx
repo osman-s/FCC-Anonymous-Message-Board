@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import {
   getThread,
   upvoteThread,
-  removeUpvoteThread
+  removeUpvoteThread,
+  getComments
 } from "../services/messageService";
 import ThreadPost from "./threadPost";
 import CommentForm from "./commentForm";
@@ -11,16 +12,19 @@ import { Link } from "react-router-dom";
 class ThreadView extends Component {
   state = {
     threads: "",
-    ogThreads: []
+    ogThreads: [],
+    comments: ""
   };
 
   async componentDidMount() {
     try {
       const { id } = this.props.match.params;
       const { data: thread } = await getThread(id);
+      const { data: comments } = await getComments(id);
+      console.log("this be comments", comments)
       let threads = [];
       threads.push(thread);
-      this.setState({ threads, ogThreads: threads });
+      this.setState({ threads, ogThreads: threads, comments });
       console.log("Update", this.state);
     } catch (ex) {
       if (ex.response && ex.response.status >= 400) {
